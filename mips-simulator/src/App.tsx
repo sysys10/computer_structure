@@ -1,10 +1,12 @@
 import { Container, Box, Typography, Grid, Snackbar, Alert } from '@mui/material'
 import { Assembly, CpuStatus } from '@components'
-import { BoxTitle } from './components/common/BoxTitle'
 import useErrorStore from '@/stores/useErrorStore'
+import { MemoryView } from './components/MemoryView'
+import { OutputLog } from './components/OutputLog'
 
 function App() {
   const { error, setError } = useErrorStore()
+
   const handleCloseError = () => {
     setError('')
   }
@@ -30,9 +32,7 @@ function App() {
                 position: 'relative',
               }}
             >
-              <BoxTitle title="Memory" />
-              {/* <MemoryViewHeader />
-            <MemoryViewBody /> */}
+              <MemoryView />
             </Box>
           </Grid>
           <Grid size={12} sx={{ mt: 2 }}>
@@ -47,8 +47,7 @@ function App() {
                 position: 'relative',
               }}
             >
-              <BoxTitle title="Output" />
-              {/* <OutPutLog /> */}
+              <OutputLog />
             </Box>
           </Grid>
         </Grid>

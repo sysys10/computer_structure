@@ -1,25 +1,39 @@
 import { assemble } from '@/models/assembler'
 import { useSourceStore } from '@/stores'
 import useErrorStore from '@/stores/useErrorStore'
-import { AssemblyResult } from '@/types'
+import useCpuStore from '@/stores/useCpuStore'
+import useLogStore from '@/stores/useLogStore'
 import { Button } from '@mui/material'
 
-function Memory(result: AssemblyResult) {
-  console.log(result)
-}
-
 export function AssemblyHeader() {
-  const source = useSourceStore((state) => state.source)
-  const setError = useErrorStore((state) => state.setError)
+  const { source, loaded, setLoaded } = useSourceStore()
+  const { setError } = useErrorStore()
+  const { memory, reset } = useCpuStore()
+  const { addLog } = useLogStore()
 
   const handleClickAssemble = async () => {
     try {
+      if (loaded) {
+        reset()
+        setLoaded(false)
+        return
+      }
+
+      reset()
+
       const result = assemble(source)
-      Memory(result)
+
+      memory.importAsm(result)
+
+      setLoaded(true)
+
+      addLog(`Assembled successfully! Code size: ${result.textSize} bytes, Data size: ${result.dataSize} bytes`, 'info')
     } catch (error: any) {
       setError(error.message)
+      addLog(`Assembly failed: ${error.message}`, 'error')
     }
   }
+
   return (
     <Button
       variant="contained"
@@ -28,7 +42,7 @@ export function AssemblyHeader() {
       size="small"
       sx={{ width: 'fit-content' }}
     >
-      Assemble & Load
+      {!loaded ? 'Assemble & Load' : 'Go Back to Edit'}
     </Button>
   )
 }
