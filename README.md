@@ -2,7 +2,7 @@
 
 React, TypeScript, MUI로 구축된 웹 기반 MIPS 어셈블리 언어 시뮬레이터입니다.
 
-![MIPS 시뮬레이터 스크린샷](screenshot.png)
+<img width="1005" alt="스크린샷 2025-04-25 오후 6 10 14" src="https://github.com/user-attachments/assets/2172e4c8-e826-463d-9186-08732ba5ce7d" />
 
 ## 개요
 
